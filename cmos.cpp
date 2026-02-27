@@ -14,25 +14,25 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
     // getting txt file
-    if (argc > 1) {
-        string filename = argv[1];
-        ifstream file;
-        if (!file.is_open()) {
-            std::cerr << "Error opening file: " << filename << std::endl;
-        }
-        string line;
-        file.open(filename);
-        while (getline(file, line)) {
-        // process each line for fingerprinting
-            for(int i = 0; i < line.length(); i++) {
-                if (line[i] == ' ' || line[i] == '\n') {
-                    line.erase(i, 1);
-                    i++;
-                }
-            }
+    string filename = argv[1];
+    ifstream file(filename);
+    if(!file) {
+        cerr << "Error opening file: " << filename << endl;
+        return 1;
+    }
 
-            
+
+    string token, line;
+    while (getline(file, line)) {
+    // process each line for fingerprinting
+        for(int i = 0; i < line.length(); i++) {
+            if (line[i] == ' ' || line[i] == '\n') {
+                line.erase(i, 1);
+                i++;
+            }
         }
+        
+
     }
     
     // compare fingerprints
