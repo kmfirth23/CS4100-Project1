@@ -26,10 +26,14 @@ int main(int argc, char* argv[]) {
 
     string line;
     vector<string> lines;
+    vector<string> programs; 
+
     while (getline(file, line)) {
     // process each line for fingerprinting
         string token = "";
+        string title_temp;
 
+        // add substring logic w string stream
         for(size_t i = 0; i < line.length(); i++) {
             if (line[i] != ' ') {
                 token += line[i];
