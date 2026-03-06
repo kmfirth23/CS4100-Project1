@@ -128,8 +128,7 @@ int main() {
 			case TKVARIABLE : cout << "010";
 				break;
 		}
-        
-		cout << " ";
+
 		token = yylex();
         
 	}
