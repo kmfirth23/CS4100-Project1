@@ -15,6 +15,7 @@ using namespace std;
 #define TKVARIABLE 010
 #define TKINCLUDES 011
 #define TKVOID 012
+#define TKIFELSE 013
 #define TKUNMATCHED 225
 
 extern "C" int yylex();
@@ -81,7 +82,11 @@ char            	{return TKCHAR;}
 bool            	{return TKBOOL;}
 void 				{return TKVOID;}
 void\)				{return TKVOID;}
-"for" | "while" 	{return TKLOOP;}
+(else[ \t]if)       {return TKIFELSE;}
+[ \n]if				    {return TKIFELSE;}
+else			    {return TKIFELSE;}
+"for" 				{return TKLOOP;}
+"while" 			{return TKLOOP;}
 "#"include<{P}+> 	{return TKINCLUDES;}
 {A}+[ \t]?= 			{return TKVARIABLE;}
 {A}+;				{return TKVARIABLE;}
@@ -118,7 +123,10 @@ int main() {
 				break;
 			case TKVOID : cout << "012";
 				break;
+			case TKIFELSE : cout << "013";
+				break;
 			case TKVARIABLE : cout << "010";
+				break;
 		}
         
 		cout << " ";
