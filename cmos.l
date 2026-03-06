@@ -12,6 +12,9 @@ using namespace std;
 #define TKBOOL 005
 #define TKSTRING 006
 #define TKLOOP 007
+#define TKVARIABLE 010
+#define TKINCLUDES 011
+#define TKVOID 012
 #define TKUNMATCHED 225
 
 extern "C" int yylex();
@@ -38,8 +41,10 @@ int line_num()
 
 %}
 
-A [a-zA-Z_]
-C [a-zA-Z_,]
+/*function/variable names*/
+A [a-zA-Z1-9_]
+/*includes*/
+P [a-zA-Z_.]
 
 %%
 [ \t\n\f]       {Addline(yytext[0]);
@@ -68,14 +73,21 @@ C [a-zA-Z_,]
 				}
 				}
 
-{A}+\({C}+\)    {return TKFUNCTION;}
-int             {return TKINT;}
-double          {return TKDOUBLE;}
-string          {return TKSTRING;}
-char            {return TKCHAR;}
-bool            {return TKBOOL;}
-"for" | "while" {return TKLOOP;}
-.               {return TKUNMATCHED;}
+{A}+\(    			{return TKFUNCTION;}
+int             	{return TKINT;}
+double          	{return TKDOUBLE;}
+string          	{return TKSTRING;}
+char            	{return TKCHAR;}
+bool            	{return TKBOOL;}
+void 				{return TKVOID;}
+void\)				{return TKVOID;}
+"for" | "while" 	{return TKLOOP;}
+"#"include<{P}+> 	{return TKINCLUDES;}
+{A}+[ \t]?= 			{return TKVARIABLE;}
+{A}+;				{return TKVARIABLE;}
+{A}+,				{return TKVARIABLE;}
+{A}+\)				{return TKVARIABLE;}
+.               	{return TKUNMATCHED;}
 
 %%
 int yywrap(){
@@ -102,8 +114,14 @@ int main() {
 				break;
 			case TKLOOP : cout << "007";
 				break;
+			case TKINCLUDES : cout << "011";
+				break;
+			case TKVOID : cout << "012";
+				break;
+			case TKVARIABLE : cout << "010";
 		}
         
+		cout << " ";
 		token = yylex();
         
 	}
