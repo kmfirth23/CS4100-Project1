@@ -11,9 +11,7 @@ using namespace std;
 #define TKDOUBLE 004
 #define TKBOOL 005
 #define TKSTRING 006
-#define TKFOR 007
-#define TKWHILE 010
-#define TKDO 011
+#define TKLOOP 007
 #define TKUNMATCHED 225
 
 extern "C" int yylex();
@@ -76,9 +74,7 @@ double          {return TKDOUBLE;}
 string          {return TKSTRING;}
 char            {return TKCHAR;}
 bool            {return TKBOOL;}
-"for"           {return TKFOR;}
-"while"         {return TKWHILE;}
-"do"            {return TKDO;}
+"for" | "while" {return TKLOOP;}
 .               {return TKUNMATCHED;}
 
 %%
