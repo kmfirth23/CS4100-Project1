@@ -23,25 +23,36 @@ int main(int argc, char* argv[]) {
     }
 
     string line;
+    vector<string> lines;
     while (getline(file, line)) {
     // process each line for fingerprinting
+        string token = "";
+
         for(size_t i = 0; i < line.length(); i++) {
-            if (line[i] == ' ' || line[i] == '\n') {
-                line.erase(i, 1);
-                i++;
+            if (line[i] != ' ') {
+                token += line[i];
             }
         }
+
+        lines.push_back(token);
     }
 
-    vector<string> kmers;
-    int k = 4; 
-    for (size_t i = 0; i <= line.length() - k; i++) {
-        kmers.push_back(line.substr(i, k));
-    }
+    size_t k = 4; 
+    vector<vector<string>> submissions;
 
-    // testing kmer outputss
-    for (const auto& kmer : kmers) {
-        cout << kmer << endl;
+    for (size_t i = 0; i < lines.size(); i++){  
+        vector<string> kmers;
+        string submission = lines[i];
+
+        if (submission.length() < k) {
+            continue;
+        }
+
+        for (size_t i = 0; i <= submission.length() - k; i++) {
+            kmers.push_back(submission.substr(i, k));
+        }
+
+        submissions.push_back(kmers);
     }
 
     // compare fingerprints
