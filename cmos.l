@@ -49,7 +49,7 @@ C [a-zA-Z_,]
                 char c;
                 while (1) 
                 {
-                  if ((c = yyinput() == EOF) ){
+                  if ((c = yyinput()) == EOF ){
 						//unmatched comment
 						cout << "Unterminated comment starting on line" << line_num() << endl;
 						return (0);
@@ -88,21 +88,24 @@ int main() {
 	while(token){
 
 		switch (token) {
-			case TKFUNCTION : cout << "Function" << endl;
+			case TKFUNCTION : cout << "001";
 				break;
-			case TKINT : cout << "Int" << endl;
+			case TKINT : cout << "002";
 				break;
-			case TKDOUBLE : cout << "Double" << endl;
+			case TKCHAR : cout << "003";
 				break;
-			case TKBOOL : cout << "Bool" << endl;
+			case TKDOUBLE : cout << "004";
 				break;
-			case TKSTRING : cout << "String" << endl;
+			case TKBOOL : cout << "005";
 				break;
-			case TKLOOP : cout << "Loop" << endl;
+			case TKSTRING : cout << "006";
+				break;
+			case TKLOOP : cout << "007";
 				break;
 		}
         
 		token = yylex();
         
 	}
+	cout << endl;
 }
