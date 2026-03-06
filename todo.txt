@@ -1,0 +1,7 @@
+- change substring logic
+- clarify how to output the tokens to the file
+    - can er redirect in the base?
+- compare results in code
+- manually compare
+- readme
+- report
