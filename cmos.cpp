@@ -21,7 +21,6 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-
     string token, line;
     while (getline(file, line)) {
     // process each line for fingerprinting
@@ -31,13 +30,16 @@ int main(int argc, char* argv[]) {
                 i++;
             }
         }
-        
-
     }
-    
-    // compare fingerprints
 
+    // compare fingerprints
+    if() {
+        cout << "Plagiarism detected!" << endl;
+    } else {
+        cout << "No plagiarism detected." << endl;
+    }
     // output results to report file
+
 
     return 0;
 }
