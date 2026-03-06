@@ -13,6 +13,8 @@
 
 using namespace std;
 
+long long hashFunc(const string& str);
+
 int main(int argc, char* argv[]) {
     // getting txt file
     string filename = argv[1];
@@ -55,6 +57,17 @@ int main(int argc, char* argv[]) {
         submissions.push_back(kmers);
     }
 
+    // hasing the kmers
+    vector<vector<long long>> hashes;
+    for (size_t i = 0; i < submissions.size(); i++) {
+        vector<long long> temp;
+
+        for (size_t j = 0; j < submissions[i].size(); j++) {
+            string kmer = submissions[i][j];
+            temp.push_back(hashFunc(kmer));
+        }
+        hashes.push_back(temp);
+    }      
     // compare fingerprints
     /**if() {
        
@@ -63,4 +76,12 @@ int main(int argc, char* argv[]) {
     }*/
     // output results to report file
     return 0;
+}
+
+long long hashFunc(const string& str) {
+    long long h = 0;
+    for (char c : str) {
+        h = h * 23 + (c - '0');
+    }
+    return h;
 }
