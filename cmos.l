@@ -79,7 +79,7 @@ bool            {return TKBOOL;}
 
 %%
 int yywrap(){
-    return 1; 
+    return true; 
 }
 
 int main() {
@@ -87,22 +87,21 @@ int main() {
 	token = yylex();
 	while(token){
 
-		/*switch (token) {
-			case TKCOLORS : cout << "Reading a colors definition" << endl;
+		switch (token) {
+			case TKFUNCTION : cout << "Function" << endl;
 				break;
-			case TKID: cout << "Color = " << yytext << endl;
+			case TKINT : cout << "Int" << endl;
 				break;
-			case '{': cout << "Beginning of set"<< endl;
+			case TKDOUBLE : cout << "Double" << endl;
 				break;
-			case ',': cout << "Seperator " << endl;
+			case TKBOOL : cout << "Bool" << endl;
 				break;
-			case '}' : cout << "End of set" << endl;
+			case TKSTRING : cout << "String" << endl;
 				break;
-			case '=' : cout << "Equals " << endl;
+			case TKLOOP : cout << "Loop" << endl;
 				break;
-			case ';' : cout << "Semicolon!" << endl;
 		}
-        */
+        
 		token = yylex();
         
 	}
