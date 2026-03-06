@@ -9,6 +9,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -21,10 +22,10 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    string token, line;
+    string line;
     while (getline(file, line)) {
     // process each line for fingerprinting
-        for(int i = 0; i < line.length(); i++) {
+        for(size_t i = 0; i < line.length(); i++) {
             if (line[i] == ' ' || line[i] == '\n') {
                 line.erase(i, 1);
                 i++;
@@ -32,14 +33,23 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    // compare fingerprints
-    if() {
-        cout << "Plagiarism detected!" << endl;
-    } else {
-        cout << "No plagiarism detected." << endl;
+    vector<string> kmers;
+    int k = 4; 
+    for (size_t i = 0; i <= line.length() - k; i++) {
+        kmers.push_back(line.substr(i, k));
     }
+
+    // testing kmer outputss
+    for (const auto& kmer : kmers) {
+        cout << kmer << endl;
+    }
+
+    // compare fingerprints
+    /**if() {
+       
+    } else {
+        
+    }*/
     // output results to report file
-
-
     return 0;
 }
