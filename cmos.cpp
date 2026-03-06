@@ -67,7 +67,31 @@ int main(int argc, char* argv[]) {
             temp.push_back(hashFunc(kmer));
         }
         hashes.push_back(temp);
-    }      
+    }    
+
+    size_t window = 3;
+    vector<vector<long long>> fingerprints;
+
+    for (size_t i = 0; i <= hashes.size(); i++){
+        vector<long long>& hash_temp = hashes[i];
+        vector<long long> minHashes;
+
+        if(hash_temp.size() < window){
+            continue;
+        }
+
+        for (size_t j = 0; j < hash_temp.size() - window; j++){
+            long long min = hash_temp[j];
+
+            for (size_t k = 1; k < window; k++) {
+                if (hash_temp[j + k] < min) {
+                    min = hash_temp[j + k];
+                }
+            }
+            minHashes.push_back(min);
+        }
+        fingerprints.push_back(minHashes);
+    }
     // compare fingerprints
     /**if() {
        
