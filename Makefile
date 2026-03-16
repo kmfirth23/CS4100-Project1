@@ -1,3 +1,4 @@
+#Authors: Kennedy Firth and Megan Penn
 #CXX=g++
 #CPPFLAGS= -Wall -Werror
 
