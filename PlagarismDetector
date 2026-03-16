@@ -15,5 +15,5 @@ do
 	echo "">>tokens.txt
 done
 echo "Detecting Plagarism, this may take a few minutes."
-./cmos > PlagarismReport.txt
+./cmos tokens.txt > PlagarismReport.txt
 echo "Done. Results stored in PlagarismReport.txt"

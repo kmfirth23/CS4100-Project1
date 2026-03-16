@@ -159,14 +159,12 @@ int main(int argc, char* argv[]) {
             return a.similarity > b.similarity;
         });
 
-    ofstream report("report.txt");
     for (size_t i = 0; i < rankedResults.size(); i++) {
-        report << rankedResults[i].program1 << " vs "
+        cout << rankedResults[i].program1 << " vs "
             << rankedResults[i].program2 << " : "
             << rankedResults[i].similarity << endl;
     }
-
-    report.close();
+    
     return 0;
 }
 
