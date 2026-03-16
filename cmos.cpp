@@ -35,7 +35,7 @@ struct Pair{
 };
 
 int main(int argc, char* argv[]) {
-    // getting txt file
+    // getting tokens file
     string filename = argv[1];
     ifstream file(filename);
     if(!file) {
