@@ -42,9 +42,9 @@ int line_num()
 
 %}
 
-/*function/variable names*/
+/*function/variable names alphabet*/
 A [a-zA-Z1-9_]
-/*includes*/
+/*alphabet for values inside <> for include statements*/
 P [a-zA-Z_.]
 
 %%
@@ -74,25 +74,26 @@ P [a-zA-Z_.]
 				}
 				}
 
-{A}+\(    			{return TKFUNCTION;}
-int             	{return TKINT;}
-double          	{return TKDOUBLE;}
-string          	{return TKSTRING;}
-char            	{return TKCHAR;}
-bool            	{return TKBOOL;}
-void 				{return TKVOID;}
-void\)				{return TKVOID;}
-(else[ \t]if)       {return TKIFELSE;}
-[ \n]if				    {return TKIFELSE;}
-else			    {return TKIFELSE;}
-"for" 				{return TKLOOP;}
-"while" 			{return TKLOOP;}
-"#"include<{P}+> 	{return TKINCLUDES;}
-{A}+[ \t]?= 			{return TKVARIABLE;}
-{A}+;				{return TKVARIABLE;}
-{A}+,				{return TKVARIABLE;}
-{A}+\)				{return TKVARIABLE;}
-.               	{return TKUNMATCHED;}
+\/\/					{return TKUNMATCHED;} //single line comments
+{A}+\(    				{return TKFUNCTION;} //function name found (ex: int func(int v), returns variable token for func)
+int             		{return TKINT;}
+double          		{return TKDOUBLE;}
+string          		{return TKSTRING;}
+char            		{return TKCHAR;}
+bool            		{return TKBOOL;}
+void 					{return TKVOID;}
+void\)					{return TKVOID;} 
+(else[ \t]if)       	{return TKIFELSE;} //returns ifelse token for else if
+[ \n]if				    {return TKIFELSE;} //returns ifelse token for if (includes [ \n] as variable names can include if(like fifty))
+else			    	{return TKIFELSE;} // returns if else token for else 
+"for" 					{return TKLOOP;}
+"while" 				{return TKLOOP;}
+"#"include<{P}+> 		{return TKINCLUDES;} //returns includes token for #include <value>
+{A}+[ \t]?= 			{return TKVARIABLE;} //ex: int var = returns variable token for var
+{A}+;					{return TKVARIABLE;} //ex: int var; returns variable token for var
+{A}+,					{return TKVARIABLE;} //ex: void function(int var, int var2); returns variable token for var
+{A}+\)					{return TKVARIABLE;} //ex: void function(int var, int var2); returns variabl token for var2
+.               		{return TKUNMATCHED;}
 
 %%
 int yywrap(){
@@ -132,5 +133,4 @@ int main() {
 		token = yylex();
         
 	}
-	cout << endl;
 }
