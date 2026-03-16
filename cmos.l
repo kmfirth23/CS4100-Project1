@@ -1,4 +1,9 @@
-/*Here is a lex program */
+/*
+ * @file cmos.l
+ * @author Kennedy Firth and Megan Penn
+ * @brief - Lex program to tokenize C++ files. 
+ * @date 2026-02-26
+*/
 
 %{ //declarations
 
