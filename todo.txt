@@ -1,7 +1,8 @@
 - change substring logic
 - clarify how to output the tokens to the file
-    - can er redirect in the base?
+    - can we redirect it?
 - compare results in code
 - manually compare
+- Makefile
 - readme
 - report
