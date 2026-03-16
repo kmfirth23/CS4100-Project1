@@ -11,10 +11,17 @@
 #include <string>
 #include <vector>
 #include <sstream>
+#include <algorithm>
 
 using namespace std;
 
 long long hashFunc(const string& str);
+
+struct Pair{
+    string program1;
+    string program2;
+    float similarity;
+};
 
 int main(int argc, char* argv[]) {
     // getting txt file
@@ -92,7 +99,7 @@ int main(int argc, char* argv[]) {
             continue;
         }
 
-        for (size_t j = 0; j < hash_temp.size() - window; j++){
+        for (size_t j = 0; j <= hash_temp.size() - window; j++){
             long long min = hash_temp[j];
 
             for (size_t k = 1; k < window; k++) {
@@ -106,12 +113,60 @@ int main(int argc, char* argv[]) {
     }
 
     // compare fingerprints
-    /**if() {
-       
-    } else {
-        
-    }*/
-    // output results to report file
+    vector<vector<float>> final_results;
+    for (size_t i = 0; i < fingerprints.size(); i++) {
+        vector<float> res;
+
+        for (size_t j = 0; j < fingerprints.size(); j++) {
+            if (i == j) {
+                res.push_back(1.0);
+                continue;
+            }
+
+            size_t minSize = min(fingerprints[i].size(), fingerprints[j].size());
+            if (minSize == 0) {
+                res.push_back(0.0);
+                continue;
+            }
+
+            int match = 0;
+            for (size_t k = 0; k < minSize; k++) {
+                if (fingerprints[i][k] == fingerprints[j][k]) {
+                    match++;
+                }
+            }
+
+            float similarity = (float) match / minSize;
+            res.push_back(similarity);
+        }
+
+        final_results.push_back(res);
+    }
+
+    vector<Pair> rankedResults;
+
+    for (size_t i = 0; i < final_results.size(); i++) {
+        for (size_t j = i + 1; j < final_results[i].size(); j++) {
+            Pair temp;
+            temp.program1 = programs[i];
+            temp.program2 = programs[j];
+            temp.similarity = final_results[i][j];
+            rankedResults.push_back(temp);
+        }
+    }
+
+    sort(rankedResults.begin(), rankedResults.end(), [](const Pair& a, const Pair& b) {
+            return a.similarity > b.similarity;
+        });
+
+    ofstream report("report.txt");
+    for (size_t i = 0; i < rankedResults.size(); i++) {
+        report << rankedResults[i].program1 << " vs "
+            << rankedResults[i].program2 << " : "
+            << rankedResults[i].similarity << endl;
+    }
+
+    report.close();
     return 0;
 }
 
