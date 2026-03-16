@@ -10,6 +10,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <sstream>
 
 using namespace std;
 
@@ -29,20 +30,26 @@ int main(int argc, char* argv[]) {
     vector<string> programs; 
 
     while (getline(file, line)) {
-    // process each line for fingerprinting
-        string token = "";
-        string title_temp;
 
-        // add substring logic w string stream
-        for(size_t i = 0; i < line.length(); i++) {
-            if (line[i] != ' ') {
-                token += line[i];
-            }
+        stringstream ss(line);
+        string name;
+
+        // getting program name and pushing to vector
+        ss >> name;
+        programs.push_back(name);
+
+        string token;
+        string tokenString = "";
+
+        // adding rest of line to the token string
+        while (ss >> token) {
+            tokenString += token;
         }
 
-        lines.push_back(token);
+        lines.push_back(tokenString);
     }
 
+    // creating the kmers
     size_t k = 4; 
     vector<vector<string>> submissions;
 
@@ -61,7 +68,7 @@ int main(int argc, char* argv[]) {
         submissions.push_back(kmers);
     }
 
-    // hasing the kmers
+    // hashing the kmers
     vector<vector<long long>> hashes;
     for (size_t i = 0; i < submissions.size(); i++) {
         vector<long long> temp;
@@ -73,10 +80,11 @@ int main(int argc, char* argv[]) {
         hashes.push_back(temp);
     }    
 
+    // creating fingerprints
     size_t window = 3;
     vector<vector<long long>> fingerprints;
 
-    for (size_t i = 0; i <= hashes.size(); i++){
+    for (size_t i = 0; i < hashes.size(); i++){
         vector<long long>& hash_temp = hashes[i];
         vector<long long> minHashes;
 
@@ -96,6 +104,7 @@ int main(int argc, char* argv[]) {
         }
         fingerprints.push_back(minHashes);
     }
+
     // compare fingerprints
     /**if() {
        
